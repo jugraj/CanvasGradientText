@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Untitled Document</title>
+
+
+
+
+<script src="https://s0.2mdn.net/ads/studio/Enabler.js"></script>
+<script src="https://s0.2mdn.net/ads/richmedia/studio/39317180/easeljs-0.8.1.min.js"></script>
+<script src="https://s0.2mdn.net/ads/richmedia/studio/39317180/movieclip-0.8.1.min.js"></script>
+<script src="https://s0.2mdn.net/ads/richmedia/studio/39317180/preloadjs-0.6.1.min.js"></script>
+<script src="https://s0.2mdn.net/ads/richmedia/studio/39317180/tweenjs-0.6.1.min.js"></script>
+<script src="https://s0.2mdn.net/ads/richmedia/studio/39317180/CSSPlugin.min.js"></script>
+<script src="https://s0.2mdn.net/ads/richmedia/studio/39317180/TweenLite.min.js"></script>
+
+<script type="text/javascript">
+        var canvas, stage, container, txt, masker;
+        var ctx;
+        var fps = 18;
+        
+        
+        function init(){
+            
+            canvas = document.getElementById("canvas");
+            stage = new createjs.Stage(canvas);
+            ctx = canvas.getContext('2d');
+
+            stage.update();
+            TweenLite.ticker.addEventListener("tick", function(){stage.update();});
+            TweenLite.ticker.fps(24);
+            prepAsset();
+        }
+        
+        
+        function prepAsset() {
+            container = new createjs.Container();
+            txt = new createjs.Text("16 12 10 5 time","28px Arial","#ff6600");
+             
+            
+            container.addChild(txt);
+            
+            
+            container.cache(0,0,container.getBounds().width, container.getBounds().height);
+            
+            masker = new createjs.Shape();
+            
+            masker.graphics.beginLinearGradientFill(["#ff6600", "#e1c"], [0, 1], 90, 0, 0, container.getBounds().height);
+            masker.graphics.drawRect(0, 0, container.getBounds().width, container.getBounds().height);
+            masker.graphics.endFill();
+    
+    
+            // Apply filter
+            masker.filters = [
+                new createjs.AlphaMaskFilter(container.cacheCanvas)
+            ];
+            
+            
+            masker.cache(0, 0, container.getBounds().width, container.getBounds().height);
+            
+            
+            stage.addChild(masker);
+        
+        }
+    </script>
+</head>
+
+
+<body onload="init();" style="background-color:#888">
+	<div id='container'>
+    	<canvas id="canvas" width="300" height="250" style="background-color:#fff"></canvas>
+        
+    </div>
+</body>
+</html>
